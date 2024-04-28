@@ -25,11 +25,30 @@ count++;
 else
 {
 format++;
-if (*format == 'd' || *format == 'i')
+if (*format == 'b')
 {
-int num = va_arg(args, int);
-char buffer[20]; 
-int length = snprintf(buffer, sizeof(buffer), "%d", num);
+unsigned int num = va_arg(args, unsigned int);
+char buffer[33];
+/* Set buffer size according to the maximum binary rep length (32 bits + '\0')*/
+int i = 0;
+
+/* Convert the integer to binary representation*/
+while (num > 0)
+{
+buffer[i++] = (num & 1) + '0';
+num >>= 1;
+}
+/* Append the null terminator*/
+buffer[i] = '\0';
+/* Reverse the string*/
+int length = i;
+for (int j = 0; j < length / 2; j++)
+{
+char temp = buffer[j];
+buffer[j] = buffer[length - j - 1];
+buffer[length - j - 1] = temp;
+}
+/* Write the binary representation to stdout*/
 write(1, buffer, length);
 count += length;
 }
