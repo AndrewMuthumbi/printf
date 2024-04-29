@@ -1,7 +1,46 @@
 #include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
-#include <stdio.h>
+
+/**
+ * print_char - Print a single character
+ * @c: Character to print
+ * Return: Number of characters printed (always 1)
+ */
+int print_char(char c)
+{
+write(1, &c, 1);
+return (1);
+}
+
+/**
+ * print_string - Print a string
+ * @str: String to print
+ * Return: Number of characters printed
+ */
+int print_string(char *str)
+{
+int count = 0;
+
+while (*str)
+{
+write(1, str, 1);
+str++;
+count++;
+}
+
+return (count);
+}
+
+/**
+ * print_percent - Print a literal '%'
+ * Return: Always 1 (number of characters printed)
+ */
+int print_percent(void)
+{
+write(1, "%", 1);
+return (1);
+}
 
 /**
  * _printf - Print formatted output to stdout
@@ -19,38 +58,27 @@ while (*format)
 {
 if (*format != '%')
 {
-write(1, format, 1);
-count++;
+/* Regular character, just print it */
+count += print_char(*format);
 }
 else
 {
+/* Format specifier, handle accordingly */
 format++;
-if (*format == 'b')
+if (*format == 'c')
 {
-unsigned int num = va_arg(args, unsigned int);
-char buffer[33];
-/* Set buffer size according to the maximum binary rep length (32 bits + '\0')*/
-int i = 0;
-
-/* Convert the integer to binary representation*/
-while (num > 0)
-{
-buffer[i++] = (num & 1) + '0';
-num >>= 1;
+/* Character argument */
+count += print_char(va_arg(args, int));
 }
-/* Append the null terminator*/
-buffer[i] = '\0';
-/* Reverse the string*/
-int length = i;
-for (int j = 0; j < length / 2; j++)
+else if (*format == 's')
 {
-char temp = buffer[j];
-buffer[j] = buffer[length - j - 1];
-buffer[length - j - 1] = temp;
+/* String argument */
+count += print_string(va_arg(args, char *));
 }
-/* Write the binary representation to stdout*/
-write(1, buffer, length);
-count += length;
+else if (*format == '%')
+{
+/* Literal '%' */
+count += print_percent();
 }
 }
 format++;

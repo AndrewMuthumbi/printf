@@ -2,10 +2,11 @@
 #define MAIN_H
 
 #include <stdarg.h>
+#include <unistd.h>
 
+int print_char(char c);
+int print_string(char *str);
+int print_percent(void);
 int _printf(const char *format, ...);
-void print_char(char c, int *count);
-void print_string(char *str, int *count);
-void print_percent(int *count);
 
 #endif /* MAIN_H */
