@@ -4,7 +4,7 @@
  * _printf - Custom printf function
  * @format: Format string
  *
- * Return: Number of characters printed
+ * Return: Number of characters printed, or -1 on error
  */
 int _printf(const char *format, ...)
 {
@@ -12,9 +12,12 @@ va_list args;
 int count = 0;
 char *str;
 
+if (format == NULL)
+return (-1);
+
 va_start(args, format);
 
-while (format && *format)
+while (*format)
 {
 if (*format != '%')
 {
@@ -24,7 +27,10 @@ else
 {
 format++;
 if (*format == '\0')
+{
+count += print_char('%');
 break;
+}
 switch (*format)
 {
 case 'c':
