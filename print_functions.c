@@ -1,10 +1,10 @@
 #include "main.h"
 
 /**
- * print_char - Prints a character
- * @args: List of arguments
+ * print_char - Prints a single character
+ * @args: Va_list containing the character to print
  *
- * Return: Number of characters printed
+ * Return: Number of characters printed (always 1)
  */
 int print_char(va_list args)
 {
@@ -15,7 +15,7 @@ return (_putchar(c));
 
 /**
  * print_string - Prints a string
- * @args: List of arguments
+ * @args: Va_list containing the string to print
  *
  * Return: Number of characters printed
  */
@@ -38,9 +38,9 @@ return (len);
 
 /**
  * print_percent - Prints a percent sign
- * @args: List of arguments (unused)
+ * @args: Va_list (unused)
  *
- * Return: Number of characters printed
+ * Return: Number of characters printed (always 1)
  */
 int print_percent(va_list args)
 {
