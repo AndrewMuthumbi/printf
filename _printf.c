@@ -1,6 +1,9 @@
 #include "main.h"
 #include <stddef.h>
 #include <stdarg.h>
+#include <unistd.h>
+
+#define BUFFER_SIZE 1024
 
 /**
  * _printf - Custom implementation of printf function
@@ -10,7 +13,8 @@
  */
 int _printf(const char *format, ...)
 {
-int i = 0, count = 0;
+char buffer[BUFFER_SIZE];
+int i = 0, count = 0, buf_index = 0;
 va_list args;
 
 va_start(args, format);
@@ -24,14 +28,25 @@ while (format && format[i])
 if (format[i] == '%')
 {
 i++;
-handle_specifier(&format[i], args, &count);
+count += handle_specifier(&format[i], args, buffer, &buf_index);
 }
 else
 {
-_putchar(format[i]);
+if (buf_index >= BUFFER_SIZE)
+{
+write(1, buffer, buf_index);
+buf_index = 0;
+}
+buffer[buf_index++] = format[i];
 count++;
 }
+
 i++;
+}
+
+if (buf_index > 0)
+{
+write(1, buffer, buf_index);
 }
 
 va_end(args);

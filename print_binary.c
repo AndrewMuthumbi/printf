@@ -1,35 +1,46 @@
 #include "main.h"
 
 /**
- * print_binary - Converts an unsigned int argument to binary
- * @args: Va_list containing the unsigned int to convert
+ * print_binary - Prints an unsigned int in binary
+ * @args: Va_list containing the unsigned int to print
+ * @buffer: Buffer to accumulate characters
+ * @buf_index: Index of the buffer
  *
  * Return: Number of characters printed
  */
-int print_binary(va_list args)
+int print_binary(va_list args, char *buffer, int *buf_index)
 {
-unsigned int n = va_arg(args, unsigned int);
-int count = 0;
-char buffer[32];
-int i = 0;
+unsigned int num = va_arg(args, unsigned int);
+int len = 0, i;
+char bin[32];
 
-if (n == 0)
+for (i = 31; i >= 0; i--)
 {
-_putchar('0');
-return (1);
+bin[i] = (num % 2) + '0';
+num /= 2;
 }
-
-while (n > 0)
+for (i = 0; i < 32; i++)
 {
-buffer[i++] = (n % 2) + '0';
-n /= 2;
-}
-
-for (i--; i >= 0; i--)
+if (bin[i] == '1' || len > 0)
 {
-_putchar(buffer[i]);
-count++;
+if (*buf_index >= BUFFER_SIZE)
+{
+write(1, buffer, *buf_index);
+*buf_index = 0;
 }
-
-return (count);
+buffer[(*buf_index)++] = bin[i];
+len++;
+}
+}
+if (len == 0)
+{
+if (*buf_index >= BUFFER_SIZE)
+{
+write(1, buffer, *buf_index);
+*buf_index = 0;
+}
+buffer[(*buf_index)++] = '0';
+len++;
+}
+return (len);
 }
