@@ -2,27 +2,15 @@
 #define MAIN_H
 
 #include <stdarg.h>
-#include <unistd.h>
 
 int _printf(const char *format, ...);
 int _putchar(char c);
-
-/* Function prototypes for print functions */
 int print_char(va_list args);
 int print_string(va_list args);
 int print_percent(va_list args);
 int print_int(va_list args);
 int print_unsigned(unsigned int num);
-
-/**
- * struct print - Struct for print functions
- * @spec: The conversion specifier
- * @f: The function associated
- */
-typedef struct print
-{
-	char spec;
-	int (*f)(va_list);
-} print_t;
+int print_binary(va_list args);
+int handle_specifier(const char *format, va_list args, int *count);
 
 #endif /* MAIN_H */
