@@ -17,8 +17,8 @@ case 'c':
 break;
 case 's':
 *count += print_string(args);
- break;
- case '%':
+break;
+case '%':
 *count += print_percent(args);
 break;
 case 'd':
@@ -27,6 +27,15 @@ case 'i':
 break;
 case 'u':
 *count += print_unsigned(va_arg(args, unsigned int));
+break;
+case 'o':
+*count += print_octal(va_arg(args, unsigned int));
+break;
+case 'x':
+*count += print_hex(va_arg(args, unsigned int));
+break;
+case 'X':
+*count += print_hex_upper(va_arg(args, unsigned int));
 break;
 case 'b':
 *count += print_binary(args);

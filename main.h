@@ -10,6 +10,9 @@ int print_string(va_list args);
 int print_percent(va_list args);
 int print_int(va_list args);
 int print_unsigned(unsigned int num);
+int print_octal(unsigned int num);
+int print_hex(unsigned int num);
+int print_hex_upper(unsigned int num);
 int print_binary(va_list args);
 int handle_specifier(const char *format, va_list args, int *count);
 
