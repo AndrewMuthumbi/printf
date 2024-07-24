@@ -11,6 +11,8 @@ int _putchar(char c);
 int print_char(va_list args);
 int print_string(va_list args);
 int print_percent(va_list args);
+int print_int(va_list args);
+int print_unsigned(unsigned int num);
 
 /**
  * struct print - Struct for print functions
@@ -19,8 +21,8 @@ int print_percent(va_list args);
  */
 typedef struct print
 {
-char spec;
-int (*f)(va_list);
+	char spec;
+	int (*f)(va_list);
 } print_t;
 
 #endif /* MAIN_H */
